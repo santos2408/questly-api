@@ -1,0 +1,18 @@
+{
+  "name": "questly-app",
+  "version": "1.0.0",
+  "description": "Questions and answers app",
+  "main": "index.js",
+  "scripts": {
+    "ts-node": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    container_name: questly-typescript-app
+    volumes:
+      - .:/home/node/questly
