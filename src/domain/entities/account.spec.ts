@@ -1,14 +1,15 @@
 import { describe, it, expect } from "vitest";
 import { Account } from "./account.js";
+import { faker } from "@faker-js/faker";
 
 describe("Account Entity Unit Tests", () => {
   it("should create an instance of account", () => {
     // arrange
     const createdAt = new Date();
     const props = {
-      email: "roger.santos36@gmail.com",
-      password: "123456",
-      username: "rogersanttoss",
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      username: faker.internet.username(),
       createdAt,
     };
 
