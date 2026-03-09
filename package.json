@@ -4,7 +4,8 @@
   "description": "Questions and answers app",
   "main": "index.js",
   "scripts": {
-    "ts-node": "ts-node src/index.ts"
+    "ts-node": "ts-node src/index.ts",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
