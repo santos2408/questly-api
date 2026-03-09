@@ -12,7 +12,7 @@ export class Account {
   constructor(props: AccountProperties) {
     this.accountProps = { ...props };
     this.bio = props.bio ?? null;
-    this.createdAt = this.createdAt ?? new Date();
+    this.createdAt = props.createdAt ?? new Date();
   }
 
   public get props(): AccountProperties {
