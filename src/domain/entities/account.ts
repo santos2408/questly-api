@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 export type AccountProperties = {
   email: string;
   password: string;
@@ -8,22 +10,38 @@ export type AccountProperties = {
 
 export class Account {
   private readonly accountProps: AccountProperties;
+  private readonly id: string;
 
-  constructor(props: AccountProperties) {
-    this.accountProps = { ...props };
-    this.bio = props.bio ?? null;
-    this.createdAt = props.createdAt ?? new Date();
+  constructor(props: AccountProperties, id?: string) {
+    this.id = id ?? randomUUID();
+    this.accountProps = {
+      ...props,
+      bio: props.bio ?? null,
+      createdAt: props.createdAt ?? new Date(),
+    };
   }
 
-  public get props(): AccountProperties {
-    return this.accountProps;
+  public get accountId(): string {
+    return this.id;
   }
 
-  private set bio(value: string | null) {
-    this.accountProps.bio = value;
+  public get email(): string {
+    return this.accountProps.email;
   }
 
-  private set createdAt(value: Date) {
-    this.accountProps.createdAt = value;
+  public get password(): string {
+    return this.accountProps.password;
+  }
+
+  public get username(): string {
+    return this.accountProps.username;
+  }
+
+  public get bio(): string | null {
+    return this.accountProps.bio ?? null;
+  }
+
+  public get createdAt(): Date | undefined {
+    return this.accountProps.createdAt;
   }
 }
