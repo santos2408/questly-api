@@ -22,3 +22,11 @@ scope:
 subject:
 
 - Brief summary of the change in present tense. Not capitalized. No period at the end.
+
+==== CAMADAS E DEPENDÊNCIAS ====
+
+Camada | Pode depender de
+Domain | ninguém
+Application | Domain
+Presentation | Application, Domain
+Infrastructure | Domain, Libs, Frameworks, Drivers
