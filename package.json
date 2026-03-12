@@ -6,6 +6,7 @@
   "scripts": {
     "ts-node": "ts-node src/index.ts",
     "test": "vitest",
+    "test:staged": "vitest",
     "prepare": "husky"
   },
   "keywords": [],
