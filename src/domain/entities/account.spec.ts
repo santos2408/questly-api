@@ -1,15 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { Account } from "./account.js";
 import { faker } from "@faker-js/faker";
+import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object.js";
 
-describe("Account Entity Unit Tests", () => {
+describe("Account  Entity Unit Tests", () => {
   it("should create account with valid initial props", () => {
     // arrange
     const createdAt = new Date();
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
-      username: faker.internet.username(),
+      name: faker.person.fullName(),
       createdAt,
     };
 
@@ -17,9 +18,10 @@ describe("Account Entity Unit Tests", () => {
     const account = new Account(props);
 
     // assert
+    expect(account.accountId).toBeInstanceOf(UniqueEntityId);
     expect(account.email).toBe(props.email);
     expect(account.password).toBe(props.password);
-    expect(account.username).toBe(props.username);
+    expect(account.name).toBe(props.name);
     expect(account.bio).toBeNull();
     expect(account.createdAt).toStrictEqual(createdAt);
   });
@@ -30,7 +32,7 @@ describe("Account Entity Unit Tests", () => {
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
-      username: faker.internet.username(),
+      name: faker.person.fullName(),
       bio: "valid_bio",
       createdAt,
     };
@@ -47,7 +49,7 @@ describe("Account Entity Unit Tests", () => {
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
-      username: faker.internet.username(),
+      name: faker.person.fullName(),
       bio: "valid_bio",
     };
 
@@ -64,7 +66,7 @@ describe("Account Entity Unit Tests", () => {
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
-      username: faker.internet.username(),
+      name: faker.person.fullName(),
       createdAt,
     };
 
@@ -73,6 +75,7 @@ describe("Account Entity Unit Tests", () => {
 
     // assert
     expect(account.accountId).toBeDefined();
+    expect(account.accountId).toBeInstanceOf(UniqueEntityId);
   });
 
   it("should use the provided 'id' if one is given", () => {
@@ -81,12 +84,12 @@ describe("Account Entity Unit Tests", () => {
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
-      username: faker.internet.username(),
+      name: faker.person.fullName(),
       createdAt,
     };
 
     // act
-    const id = "valid_id";
+    const id = new UniqueEntityId();
     const account = new Account(props, id);
 
     // assert
