@@ -1,19 +1,19 @@
-import { randomUUID } from "node:crypto";
+import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
 
 export type AccountProperties = {
   email: string;
   password: string;
-  username: string;
+  name: string;
   bio?: string | null;
   createdAt?: Date;
 };
 
 export class Account {
   private readonly accountProps: AccountProperties;
-  private readonly id: string;
+  private readonly id: UniqueEntityId;
 
-  constructor(props: AccountProperties, id?: string) {
-    this.id = id ?? randomUUID();
+  constructor(props: AccountProperties, id?: UniqueEntityId) {
+    this.id = id || new UniqueEntityId();
     this.accountProps = {
       ...props,
       bio: props.bio ?? null,
@@ -21,7 +21,7 @@ export class Account {
     };
   }
 
-  public get accountId(): string {
+  public get accountId(): UniqueEntityId {
     return this.id;
   }
 
@@ -33,8 +33,8 @@ export class Account {
     return this.accountProps.password;
   }
 
-  public get username(): string {
-    return this.accountProps.username;
+  public get name(): string {
+    return this.accountProps.name;
   }
 
   public get bio(): string | null {
