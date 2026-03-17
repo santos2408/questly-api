@@ -1,17 +1,16 @@
 import { randomUUID } from "node:crypto";
-import { validate as uuidValidate } from "uuid";
 import { InvalidUuidError } from "../errors/invalid-uuid-error";
+import { ValueObject } from "./value-object";
+import { validate as uuidValidate } from "uuid";
 
-export class UniqueEntityId {
-  private readonly id?: string;
-
+export class UniqueEntityId extends ValueObject<string> {
   constructor(id?: string) {
-    this.id = id ?? randomUUID();
+    super(id ?? randomUUID());
     this.validate();
   }
 
   private validate() {
-    const isValid = uuidValidate(this.id);
+    const isValid = uuidValidate(this.value);
     if (!isValid) {
       throw new InvalidUuidError();
     }
