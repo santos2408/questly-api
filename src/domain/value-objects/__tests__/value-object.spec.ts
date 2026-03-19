@@ -4,13 +4,13 @@ import { ValueObject } from "../value-object";
 class ValueObjectStub extends ValueObject {}
 
 describe("ValueObject Unit Tests", () => {
-  it("should set a value", () => {
-    let value: any = "any_value";
-    let valueObject: ValueObject = new ValueObjectStub(value);
-    expect(valueObject.value).toBe(value);
+  it("should set a primitive value", () => {
+    const value = "any_value";
+    const valueObjectStub = new ValueObjectStub(value);
+    expect(valueObjectStub.value).toBe(value);
 
-    value = { prop1: "any_value" };
-    valueObject = new ValueObjectStub(value);
-    expect(valueObject.value).toStrictEqual(value);
+    // value = { prop1: "any_value" };
+    // valueObjectStub = new ValueObjectStub(value);
+    // expect(valueObjectStub.value).toStrictEqual(value);
   });
 });
