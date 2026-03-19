@@ -8,10 +8,6 @@ describe("ValueObject Unit Tests", () => {
     const value = "any_value";
     const valueObjectStub = new ValueObjectStub(value);
     expect(valueObjectStub.value).toBe(value);
-
-    // value = { prop1: "any_value" };
-    // valueObjectStub = new ValueObjectStub(value);
-    // expect(valueObjectStub.value).toStrictEqual(value);
   });
 
   it("should set an object value", () => {
