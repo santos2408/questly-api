@@ -13,4 +13,10 @@ describe("ValueObject Unit Tests", () => {
     // valueObjectStub = new ValueObjectStub(value);
     // expect(valueObjectStub.value).toStrictEqual(value);
   });
+
+  it("should set an object value", () => {
+    const value = { prop1: "any_value" };
+    const valueObjectStub = new ValueObjectStub(value);
+    expect(valueObjectStub.value).toStrictEqual(value);
+  });
 });
