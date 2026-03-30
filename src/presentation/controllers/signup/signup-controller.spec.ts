@@ -1,5 +1,4 @@
 import type { EmailValidator } from "../../protocols/email-validator";
-import { describe, expect, it, vi } from "vitest";
 import { SignUpController } from "./signup-controller";
 import { MissingParamError, InvalidParamError, ServerError } from "../../errors";
 
@@ -57,6 +56,25 @@ describe("SignUp Controller", () => {
     // ============ assert ============
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError("email"));
+  });
+
+  it("should return 400 if no 'password' is provided", async () => {
+    // ============ arrange ============
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: "any_name",
+        email: "any_email@mail.com",
+        passwordConfirmation: "any_password",
+      },
+    };
+
+    // ============ act ============
+    const httpResponse = await sut.handle(httpRequest);
+
+    // ============ assert ============
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError("password"));
   });
 
   it("should return 400 if no 'password' is provided", async () => {
