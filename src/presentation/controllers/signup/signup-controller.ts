@@ -19,8 +19,13 @@ export class SignUpController implements Controller {
         }
       }
 
-      const { email, password, passwordConfirmation } = httpRequest.body;
+      const { honeypot, email, password, passwordConfirmation } = httpRequest.body;
       const isAValidPasswordConfirmation = password.trim() === passwordConfirmation.trim();
+      const isHoneypotValid = Boolean(honeypot);
+
+      if (isHoneypotValid) {
+        return badRequest(new InvalidParamError("honeypot"));
+      }
 
       if (!isAValidPasswordConfirmation) {
         return badRequest(new InvalidParamError("passwordConfirmation"));
