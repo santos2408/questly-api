@@ -20,6 +20,27 @@ const makeSut = (): SutTypes => {
 };
 
 describe("SignUp Controller", () => {
+  it("should return 400 if 'honeypot' is valid", async () => {
+    // ============ arrange ============
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        honeypot: "any_value",
+        name: "any_name",
+        email: "any_email@mail.com",
+        password: "any_password",
+        passwordConfirmation: "any_password",
+      },
+    };
+
+    // ============ act ============
+    const httpResponse = await sut.handle(httpRequest);
+
+    // ============ assert ============
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new InvalidParamError("honeypot"));
+  });
+
   it("should return 400 if no 'name' is provided", async () => {
     // ============ arrange ============
     const { sut } = makeSut();
