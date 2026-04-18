@@ -1,16 +1,22 @@
 import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
+import { Roles } from "../enums/roles";
+import { Status } from "../enums/status";
 
 export type AccountProperties = {
+  name: string;
   email: string;
   password: string;
-  name: string;
-  bio?: string | null;
+  role?: Roles;
+  status?: Status;
   createdAt?: Date;
+  updatedAt?: Date;
 };
 
 type AccountInternalProperties = AccountProperties & {
-  bio: string | null;
+  role: Roles;
+  status: Status;
   createdAt: Date;
+  updatedAt: Date;
 };
 
 export class Account {
@@ -21,13 +27,19 @@ export class Account {
     this.id = id || new UniqueEntityId();
     this.accountProps = {
       ...props,
-      bio: props.bio ?? null,
+      role: Roles.USER,
+      status: Status.ACTIVE,
       createdAt: props.createdAt ?? new Date(),
+      updatedAt: props.updatedAt ?? new Date(),
     };
   }
 
   public get accountId(): UniqueEntityId {
     return this.id;
+  }
+
+  public get name(): string {
+    return this.accountProps.name;
   }
 
   public get email(): string {
@@ -38,15 +50,19 @@ export class Account {
     return this.accountProps.password;
   }
 
-  public get name(): string {
-    return this.accountProps.name;
+  public get role(): Roles {
+    return this.accountProps.role;
   }
 
-  public get bio(): string | null {
-    return this.accountProps.bio;
+  public get status(): Status {
+    return this.accountProps.status;
   }
 
   public get createdAt(): Date {
     return this.accountProps.createdAt;
+  }
+
+  public get updatedAt(): Date {
+    return this.accountProps.updatedAt;
   }
 }

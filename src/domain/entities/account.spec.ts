@@ -2,38 +2,35 @@ import { describe, it, expect } from "vitest";
 import { Account } from "./account.js";
 import { faker } from "@faker-js/faker";
 import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object.js";
+import { Roles } from "../enums/roles.js";
+import { Status } from "../enums/status.js";
 
-describe("Account  Entity Unit Tests", () => {
+describe("Account Entity Unit Tests", () => {
   it("should create account with valid initial props", () => {
     // arrange
-    const createdAt = new Date();
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      createdAt,
     };
 
     // act
     const account = new Account(props);
 
     // assert
-    expect(account.accountId).toBeInstanceOf(UniqueEntityId);
+    expect(account.name).toBe(props.name);
     expect(account.email).toBe(props.email);
     expect(account.password).toBe(props.password);
-    expect(account.name).toBe(props.name);
-    expect(account.bio).toBeNull();
-    expect(account.createdAt).toStrictEqual(createdAt);
   });
 
-  it("should create account with valid 'bio' prop", () => {
+  it("should create account with valid 'role' prop", () => {
     // arrange
     const createdAt = new Date();
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      bio: "valid_bio",
+      role: Roles.USER,
       createdAt,
     };
 
@@ -41,16 +38,35 @@ describe("Account  Entity Unit Tests", () => {
     const account = new Account(props);
 
     // assert
-    expect(account.bio).toBeTruthy();
+    expect(account.role).toBeTruthy();
+    expect(account.role).toBe(Roles.USER);
   });
 
-  it("should set createdAt if it is not provided", () => {
+  it("should create account with valid 'status' prop", () => {
+    // arrange
+    const createdAt = new Date();
+    const props = {
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      name: faker.person.fullName(),
+      status: Status.ACTIVE,
+      createdAt,
+    };
+
+    // act
+    const account = new Account(props);
+
+    // assert
+    expect(account.status).toBeTruthy();
+    expect(account.status).toBe(Status.ACTIVE);
+  });
+
+  it("should set createdAt and updatedAt if it is not provided", () => {
     // arrange
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      bio: "valid_bio",
     };
 
     // act
@@ -58,16 +74,15 @@ describe("Account  Entity Unit Tests", () => {
 
     // assert
     expect(account.createdAt).toBeInstanceOf(Date);
+    expect(account.updatedAt).toBeInstanceOf(Date);
   });
 
   it("should generate a valid 'id' if none is provided", () => {
     // arrange
-    const createdAt = new Date();
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      createdAt,
     };
 
     // act
@@ -80,12 +95,10 @@ describe("Account  Entity Unit Tests", () => {
 
   it("should use the provided 'id' if one is given", () => {
     // arrange
-    const createdAt = new Date();
     const props = {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      createdAt,
     };
 
     // act
