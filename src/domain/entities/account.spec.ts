@@ -1,9 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { Account } from "./account.js";
+import { Account } from "./account";
 import { faker } from "@faker-js/faker";
-import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object.js";
-import { Roles } from "../enums/roles.js";
-import { Status } from "../enums/status.js";
+import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
+import { Roles, Status } from "../enums";
 
 describe("Account Entity Unit Tests", () => {
   it("should create account with valid initial props", () => {

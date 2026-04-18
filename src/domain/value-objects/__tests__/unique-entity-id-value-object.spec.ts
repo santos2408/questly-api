@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { UniqueEntityId } from "../unique-entity-id-value-object.js";
-import { InvalidUuidError } from "../../errors/invalid-uuid-error.js";
+import { UniqueEntityId } from "../unique-entity-id-value-object";
+import { InvalidUuidError } from "../../errors/invalid-uuid-error";
 
 describe("UniqueEntityIdValueObject Unit Tests", () => {
   it("should throw error when uuid is invalid", () => {
