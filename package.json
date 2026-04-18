@@ -8,7 +8,8 @@
     "docker:up": "docker compose up -d",
     "docker:up:build": "docker compose up --build -d",
     "test": "vitest --passWithNoTests",
-    "test:staged": "vitest --passWithNoTests",
+    "test:staged": "vitest related --run --passWithNoTests",
+    "test:coverage": "npm test -- --run --coverage",
     "prepare": "husky"
   },
   "keywords": [],
