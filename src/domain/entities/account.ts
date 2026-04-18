@@ -8,8 +8,13 @@ export type AccountProperties = {
   createdAt?: Date;
 };
 
+type AccountInternalProperties = AccountProperties & {
+  bio: string | null;
+  createdAt: Date;
+};
+
 export class Account {
-  private readonly accountProps: AccountProperties;
+  private readonly accountProps: AccountInternalProperties;
   private readonly id: UniqueEntityId;
 
   constructor(props: AccountProperties, id?: UniqueEntityId) {
@@ -38,10 +43,10 @@ export class Account {
   }
 
   public get bio(): string | null {
-    return this.accountProps.bio ?? null;
+    return this.accountProps.bio;
   }
 
-  public get createdAt(): Date | undefined {
+  public get createdAt(): Date {
     return this.accountProps.createdAt;
   }
 }
