@@ -25,8 +25,8 @@ subject:
 
 ==== CAMADAS E DEPENDÊNCIAS ====
 
-Camada | Pode depender de
-Domain | ninguém
-Application | Domain
-Presentation | Application, Domain
-Infrastructure | Domain, Libs, Frameworks, Drivers
+main depende de presentation, application, infra e domain
+presentation depende de application e, em alguns projetos, de tipos muito estáveis compartilhados
+application depende de domain
+infra depende de application e/ou domain para implementar contratos
+domain não depende de nenhuma outra camada
