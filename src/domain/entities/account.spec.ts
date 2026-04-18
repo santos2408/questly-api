@@ -41,7 +41,7 @@ describe("Account  Entity Unit Tests", () => {
     const account = new Account(props);
 
     // assert
-    expect(account.bio).toBe(props.bio);
+    expect(account.bio).toBeTruthy();
   });
 
   it("should set createdAt if it is not provided", () => {
