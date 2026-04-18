@@ -10,6 +10,7 @@
     "module": "commonjs",
     "target": "es2019",
     "types": ["vitest/globals"],
+    "incremental": true,
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -26,10 +27,10 @@
     "esModuleInterop": true,
 
     // Style Options
-    // "noImplicitReturns": true,
+    "noImplicitReturns": true,
     // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
     "noImplicitAny": true,
