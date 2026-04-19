@@ -13,14 +13,25 @@ export class Email extends ValueObject<string> {
     return email.trim().toLowerCase();
   }
 
-  private validate() {
-    const normalizedEmail = this.normalize(this._value);
+  private validateEmailLength(email: string) {
+    const emailLengthMaxAllowed = 254;
+    const isAValidEmailLength = email.length <= emailLengthMaxAllowed;
 
-    if (!normalizedEmail) {
+    if (!isAValidEmailLength) {
       throw new InvalidEmailError();
     }
+  }
 
-    const [localPart, domain] = normalizedEmail.split("@");
+  private validateEmailRegex(email: string) {
+    const isValid = EMAIL_REGEX.test(email);
+
+    if (!isValid) {
+      throw new InvalidEmailError();
+    }
+  }
+
+  private validateLocalPartAndDomain(email: string) {
+    const [localPart, domain] = email.split("@");
 
     if (!localPart || !domain) {
       throw new InvalidEmailError();
@@ -34,18 +45,17 @@ export class Email extends ValueObject<string> {
     if (!isAValidLocalLength || !isAValidDomainLength) {
       throw new InvalidEmailError();
     }
+  }
 
-    const emailLengthMaxAllowed = 254;
-    const isAValidEmailLength = normalizedEmail.length <= emailLengthMaxAllowed;
+  private validate() {
+    const normalizedEmail = this.normalize(this._value);
 
-    if (!isAValidEmailLength) {
+    if (!normalizedEmail) {
       throw new InvalidEmailError();
     }
 
-    const isValid = EMAIL_REGEX.test(normalizedEmail);
-
-    if (!isValid) {
-      throw new InvalidEmailError();
-    }
+    this.validateLocalPartAndDomain(normalizedEmail);
+    this.validateEmailLength(normalizedEmail);
+    this.validateEmailRegex(normalizedEmail);
   }
 }
