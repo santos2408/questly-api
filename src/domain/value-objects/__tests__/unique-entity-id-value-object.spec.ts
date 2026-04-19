@@ -26,4 +26,10 @@ describe("UniqueEntityIdValueObject Unit Tests", () => {
     // assert
     expect(actual).not.toThrow();
   });
+
+  it("should generate a valid 'uuid' when no 'id' is provided", () => {
+    const actual = new UniqueEntityId();
+    expect(actual.value).toBeTypeOf("string");
+    expect(actual).toBeInstanceOf(UniqueEntityId);
+  });
 });
