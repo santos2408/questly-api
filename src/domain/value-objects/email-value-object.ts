@@ -48,7 +48,7 @@ export class Email extends ValueObject<string> {
   }
 
   private validate() {
-    const normalizedEmail = this.normalize(this._value);
+    const normalizedEmail = this.normalize(this.value);
 
     if (!normalizedEmail) {
       throw new InvalidEmailError();
