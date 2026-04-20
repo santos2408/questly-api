@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
-import { Roles, Status } from "../enums";
+import { ROLES, STATUS, type Roles, Status } from "../enums";
 
 export type AccountProperties = {
   name: string;
@@ -26,11 +26,16 @@ export class Account {
     this.id = id || new UniqueEntityId();
     this.accountProps = {
       ...props,
-      role: Roles.USER,
-      status: Status.ACTIVE,
+      role: props.role ?? ROLES.USER,
+      status: props.status ?? STATUS.ACTIVE,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
     };
+  }
+
+  static create(props: AccountProperties, id?: UniqueEntityId): Account {
+    // [] - validations...
+    return new Account(props, id);
   }
 
   public get accountId(): UniqueEntityId {

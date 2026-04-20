@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { Account } from "./account";
 import { faker } from "@faker-js/faker";
 import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
-import { Roles, Status } from "../enums";
+import { ROLES, STATUS } from "../enums";
 
 describe("Account Entity Unit Tests", () => {
   it("should create account with valid initial props", () => {
@@ -14,7 +14,7 @@ describe("Account Entity Unit Tests", () => {
     };
 
     // act
-    const account = new Account(props);
+    const account = Account.create(props);
 
     // assert
     expect(account.name).toBe(props.name);
@@ -29,16 +29,16 @@ describe("Account Entity Unit Tests", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      role: Roles.USER,
+      role: ROLES.USER,
       createdAt,
     };
 
     // act
-    const account = new Account(props);
+    const account = Account.create(props);
 
     // assert
     expect(account.role).toBeTruthy();
-    expect(account.role).toBe(Roles.USER);
+    expect(account.role).toBe(ROLES.USER);
   });
 
   it("should create account with valid 'status' prop", () => {
@@ -48,16 +48,16 @@ describe("Account Entity Unit Tests", () => {
       email: faker.internet.email(),
       password: faker.internet.password(),
       name: faker.person.fullName(),
-      status: Status.ACTIVE,
+      status: STATUS.ACTIVE,
       createdAt,
     };
 
     // act
-    const account = new Account(props);
+    const account = Account.create(props);
 
     // assert
     expect(account.status).toBeTruthy();
-    expect(account.status).toBe(Status.ACTIVE);
+    expect(account.status).toBe(STATUS.ACTIVE);
   });
 
   it("should set createdAt and updatedAt if it is not provided", () => {
@@ -69,7 +69,7 @@ describe("Account Entity Unit Tests", () => {
     };
 
     // act
-    const account = new Account(props);
+    const account = Account.create(props);
 
     // assert
     expect(account.createdAt).toBeInstanceOf(Date);
@@ -85,7 +85,7 @@ describe("Account Entity Unit Tests", () => {
     };
 
     // act
-    const account = new Account(props);
+    const account = Account.create(props);
 
     // assert
     expect(account.accountId).toBeDefined();
@@ -102,7 +102,7 @@ describe("Account Entity Unit Tests", () => {
 
     // act
     const id = new UniqueEntityId();
-    const account = new Account(props, id);
+    const account = Account.create(props, id);
 
     // assert
     expect(account.accountId).toBe(id);
