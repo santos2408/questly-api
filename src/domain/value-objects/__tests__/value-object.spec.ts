@@ -15,4 +15,13 @@ describe("ValueObject Unit Tests", () => {
     const valueObjectStub = new ValueObjectStub(value);
     expect(valueObjectStub.value).toStrictEqual(value);
   });
+
+  it("should convert to a string", () => {
+    const values = [{ prop1: "any_value" }, "", "valid_string", 0, 1, 10, true, false, new Date(), undefined, null, () => {}];
+    values.forEach((value) => {
+      const valueObjectStub = new ValueObjectStub(value);
+      expect(valueObjectStub.value).toBe(value);
+      expect(valueObjectStub.toString()).toBeTypeOf("string");
+    });
+  });
 });
