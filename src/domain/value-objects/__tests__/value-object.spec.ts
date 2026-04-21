@@ -24,4 +24,10 @@ describe("ValueObject Unit Tests", () => {
       expect(valueObjectStub.toString()).toBeTypeOf("string");
     });
   });
+
+  it("ensure ValueObject value is immutable", () => {
+    const valueObjectStub = new ValueObjectStub({ prop1: "value1", nested: { prop2: "value2" } });
+    const actual = () => (valueObjectStub["_value"].nested.prop2 = "change!");
+    expect(actual).toThrow();
+  });
 });
