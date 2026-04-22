@@ -88,8 +88,8 @@ describe("Account Entity Unit Tests", () => {
     const account = Account.create(props);
 
     // assert
-    expect(account.accountId).toBeDefined();
-    expect(account.accountId).toBeInstanceOf(UniqueEntityId);
+    expect(account.id).toBeDefined();
+    expect(account.id).toBeTypeOf("string");
   });
 
   it("should use the provided 'id' if one is given", () => {
@@ -105,6 +105,6 @@ describe("Account Entity Unit Tests", () => {
     const account = Account.create(props, id);
 
     // assert
-    expect(account.accountId).toBe(id);
+    expect(account.id).toBe(id.value);
   });
 });

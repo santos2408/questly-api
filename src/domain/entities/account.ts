@@ -1,3 +1,4 @@
+import { Entity } from "./entity";
 import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
 import { ROLES, STATUS, type Roles, Status } from "../enums";
 
@@ -18,12 +19,11 @@ type AccountInternalProperties = AccountProperties & {
   updatedAt: Date;
 };
 
-export class Account {
+export class Account extends Entity<AccountProperties> {
   private readonly accountProps: AccountInternalProperties;
-  private readonly id: UniqueEntityId;
 
   constructor(props: AccountProperties, id?: UniqueEntityId) {
-    this.id = id || new UniqueEntityId();
+    super(props, id);
     this.accountProps = {
       ...props,
       role: props.role ?? ROLES.USER,
@@ -36,10 +36,6 @@ export class Account {
   static create(props: AccountProperties, id?: UniqueEntityId): Account {
     // [] - validations...
     return new Account(props, id);
-  }
-
-  public get accountId(): UniqueEntityId {
-    return this.id;
   }
 
   public get name(): string {
