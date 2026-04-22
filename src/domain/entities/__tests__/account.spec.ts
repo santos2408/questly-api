@@ -107,4 +107,22 @@ describe("Account Entity Unit Tests", () => {
     // assert
     expect(account.id).toBe(id.value);
   });
+
+  it("should update name", () => {
+    // arrange
+    const props = {
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    };
+
+    // act
+    const id = new UniqueEntityId();
+    const account = Account.create(props, id);
+
+    account.update("any_name");
+
+    // assert
+    expect(account.name).toBe("any_name");
+  });
 });
