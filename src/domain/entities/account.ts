@@ -42,6 +42,10 @@ export class Account extends Entity<AccountInternalProperties> {
     this.props.name = name;
   }
 
+  activate(): void {
+    this.props.status = STATUS.ACTIVE;
+  }
+
   public get name(): string {
     return this.props.name;
   }
