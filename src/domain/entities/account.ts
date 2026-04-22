@@ -38,6 +38,10 @@ export class Account extends Entity<AccountInternalProperties> {
     return new Account(props, id);
   }
 
+  update(name: string): void {
+    this.props.name = name;
+  }
+
   public get name(): string {
     return this.props.name;
   }
