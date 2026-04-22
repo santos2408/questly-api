@@ -19,18 +19,18 @@ type AccountInternalProperties = AccountProperties & {
   updatedAt: Date;
 };
 
-export class Account extends Entity<AccountProperties> {
-  private readonly accountProps: AccountInternalProperties;
-
+export class Account extends Entity<AccountInternalProperties> {
   constructor(props: AccountProperties, id?: UniqueEntityId) {
-    super(props, id);
-    this.accountProps = {
+    const currentDate = new Date();
+    const accountProps: AccountInternalProperties = {
       ...props,
       role: props.role ?? ROLES.USER,
       status: props.status ?? STATUS.ACTIVE,
-      createdAt: props.createdAt ?? new Date(),
-      updatedAt: props.updatedAt ?? new Date(),
+      createdAt: props.createdAt ?? currentDate,
+      updatedAt: props.updatedAt ?? currentDate,
     };
+
+    super(accountProps, id);
   }
 
   static create(props: AccountProperties, id?: UniqueEntityId): Account {
@@ -39,30 +39,30 @@ export class Account extends Entity<AccountProperties> {
   }
 
   public get name(): string {
-    return this.accountProps.name;
+    return this.props.name;
   }
 
   public get email(): string {
-    return this.accountProps.email;
+    return this.props.email;
   }
 
   public get password(): string {
-    return this.accountProps.password;
+    return this.props.password;
   }
 
   public get role(): Roles {
-    return this.accountProps.role;
+    return this.props.role;
   }
 
   public get status(): Status {
-    return this.accountProps.status;
+    return this.props.status;
   }
 
   public get createdAt(): Date {
-    return this.accountProps.createdAt;
+    return this.props.createdAt;
   }
 
   public get updatedAt(): Date {
-    return this.accountProps.updatedAt;
+    return this.props.updatedAt;
   }
 }
