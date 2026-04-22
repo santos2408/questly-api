@@ -125,4 +125,24 @@ describe("Account Entity Unit Tests", () => {
     // assert
     expect(account.name).toBe("any_name");
   });
+
+  it("should call activate method and active account", () => {
+    // arrange
+    const props = {
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    };
+
+    // act
+    const id = new UniqueEntityId();
+    const account = Account.create(props, id);
+    const activateSpy = vi.spyOn(account, "activate");
+
+    account.activate();
+
+    // assert
+    expect(activateSpy).toHaveBeenCalled();
+    expect(account.status).toBe(STATUS.ACTIVE);
+  });
 });
