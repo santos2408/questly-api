@@ -1,5 +1,5 @@
-import type { Status } from "../../../domain/enums/status";
-import type { Roles } from "../../../domain/enums/roles";
+import type { Status } from "../../../domain/constants/status";
+import type { Roles } from "../../../domain/constants/roles";
 
 export type AddAccountOutput = {
   id: string;

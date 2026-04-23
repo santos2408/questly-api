@@ -1,6 +1,6 @@
 import { Entity } from "./entity";
 import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
-import { ROLES, STATUS, type Roles, Status } from "../enums";
+import { ROLES, STATUS, type Roles, Status } from "../constants";
 
 export type AccountProperties = {
   name: string;

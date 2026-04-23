@@ -1,6 +1,6 @@
 import type { EmailValidator } from "../../protocols/email-validator";
 import type { AddAccount, CreateAccountDTO, AddAccountOutput } from "../../../application/usecases/add-account";
-import { ROLES, STATUS } from "../../../domain/enums";
+import { ROLES, STATUS } from "../../../domain/constants";
 import { MissingParamError, InvalidParamError, ServerError } from "../../errors";
 import { SignUpController } from "./signup-controller";
 
