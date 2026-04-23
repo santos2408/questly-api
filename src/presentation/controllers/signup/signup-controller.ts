@@ -1,12 +1,15 @@
 import type { Controller, HttpRequest, HttpResponse, EmailValidator } from "../../protocols";
+import type { AddAccount } from "../../../application/usecases/add-account";
 import { MissingParamError, InvalidParamError } from "./../../errors";
 import { badRequest, serverError } from "../../helpers/http-helper";
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator;
+  private readonly addAccount: AddAccount;
 
-  constructor(emailValidator: EmailValidator) {
+  constructor(emailValidator: EmailValidator, addAccount: AddAccount) {
     this.emailValidator = emailValidator;
+    this.addAccount = addAccount;
   }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -19,7 +22,7 @@ export class SignUpController implements Controller {
         }
       }
 
-      const { honeypot, email, password, passwordConfirmation } = httpRequest.body;
+      const { honeypot, name, email, password, passwordConfirmation } = httpRequest.body;
       const isAValidPasswordConfirmation = password.trim() === passwordConfirmation.trim();
       const isHoneypotValid = Boolean(honeypot);
 
@@ -36,6 +39,8 @@ export class SignUpController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError("email"));
       }
+
+      await this.addAccount.add({ name, email, password });
 
       return { statusCode: 400 };
     } catch (error) {
