@@ -1,7 +1,7 @@
 import type { EmailValidator } from "../../protocols/email-validator";
-import type { AddAccount } from "../../../application/usecases/add-account";
-import type { CreateAccountDTO } from "../../../application/usecases/create-account-dto";
-import type { AddAccountOutput } from "../../../application/usecases/add-account-output";
+import type { AddAccount } from "../../../application/usecases/add-account/add-account";
+import type { CreateAccountDTO } from "../../../application/usecases/add-account/create-account-dto";
+import type { AddAccountOutput } from "../../../application/usecases/add-account/add-account-output";
 import { ROLES, STATUS } from "../../../domain/enums";
 import { SignUpController } from "./signup-controller";
 import { MissingParamError, InvalidParamError, ServerError } from "../../errors";

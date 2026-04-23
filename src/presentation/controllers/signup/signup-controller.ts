@@ -1,5 +1,5 @@
 import type { Controller, HttpRequest, HttpResponse, EmailValidator } from "../../protocols";
-import type { AddAccount } from "../../../application/usecases/add-account";
+import type { AddAccount } from "../../../application/usecases/add-account/add-account";
 import { MissingParamError, InvalidParamError } from "./../../errors";
 import { badRequest, serverError } from "../../helpers/http-helper";
 
