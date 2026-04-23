@@ -1,10 +1,15 @@
 import type { EmailValidator } from "../../protocols/email-validator";
+import type { AddAccount } from "../../../application/usecases/add-account";
+import type { CreateAccountDTO } from "../../../application/usecases/create-account-dto";
+import type { AddAccountOutput } from "../../../application/usecases/add-account-output";
+import { ROLES, STATUS } from "../../../domain/enums";
 import { SignUpController } from "./signup-controller";
 import { MissingParamError, InvalidParamError, ServerError } from "../../errors";
 
 interface SutTypes {
-  emailValidatorStub: EmailValidator;
   sut: SignUpController;
+  emailValidatorStub: EmailValidator;
+  addAccountStub: AddAccount;
 }
 
 const makeEmailValidator = () => {
@@ -16,10 +21,27 @@ const makeEmailValidator = () => {
   return new EmailValidatorStub();
 };
 
+const makeAddAccountStub = () => {
+  class AddAccountStub implements AddAccount {
+    add(account: CreateAccountDTO): Promise<AddAccountOutput> {
+      return Promise.resolve({
+        id: "valid_id",
+        name: "valid_name",
+        email: "valid_email@mail.com",
+        status: STATUS.ACTIVE,
+        role: ROLES.USER,
+        createdAt: new Date(),
+      });
+    }
+  }
+  return new AddAccountStub();
+};
+
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
-  const sut = new SignUpController(emailValidatorStub);
-  return { emailValidatorStub, sut };
+  const addAccountStub = makeAddAccountStub();
+  const sut = new SignUpController(emailValidatorStub, addAccountStub);
+  return { sut, emailValidatorStub, addAccountStub };
 };
 
 describe("SignUp Controller", () => {
@@ -203,5 +225,29 @@ describe("SignUp Controller", () => {
     // ============ assert ============
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError());
+  });
+
+  it("should call AddAccount with correct values", async () => {
+    // ============ arrange ============
+    const { sut, addAccountStub } = makeSut();
+    const httpRequest = {
+      body: {
+        name: "any_name",
+        email: "any_email@mail.com",
+        password: "any_password",
+        passwordConfirmation: "any_password",
+      },
+    };
+    const addSpy = vi.spyOn(addAccountStub, "add");
+
+    // ============ act ============
+    await sut.handle(httpRequest);
+
+    // ============ assert ============
+    expect(addSpy).toHaveBeenCalledWith({
+      name: httpRequest.body.name,
+      email: httpRequest.body.email,
+      password: httpRequest.body.password,
+    });
   });
 });
