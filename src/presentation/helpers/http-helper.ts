@@ -1,5 +1,5 @@
 import type { HttpResponse } from "../protocols/http";
-import { ServerError } from "../errors/server-error";
+import { ServerError } from "../errors";
 
 export const created = (data: any): HttpResponse => ({
   statusCode: 204,
