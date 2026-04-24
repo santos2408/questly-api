@@ -1,6 +1,11 @@
 import type { HttpResponse } from "../protocols/http";
 import { ServerError } from "../errors/server-error";
 
+export const created = (data: any): HttpResponse => ({
+  statusCode: 204,
+  body: data,
+});
+
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
   body: error,

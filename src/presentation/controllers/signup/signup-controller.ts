@@ -1,7 +1,7 @@
 import type { Controller, HttpRequest, HttpResponse, EmailValidator } from "../../protocols";
 import type { AddAccount } from "../../../application/usecases/add-account/add-account";
 import { MissingParamError, InvalidParamError } from "./../../errors";
-import { badRequest, serverError } from "../../helpers/http-helper";
+import { created, badRequest, serverError } from "../../helpers/http-helper";
 
 export class SignUpController implements Controller {
   private readonly emailValidator: EmailValidator;
@@ -42,7 +42,7 @@ export class SignUpController implements Controller {
 
       const addedAccount = await this.addAccount.add({ name, email, password });
 
-      return { statusCode: 204, body: addedAccount };
+      return created(addedAccount);
     } catch (error) {
       return serverError();
     }
