@@ -40,9 +40,9 @@ export class SignUpController implements Controller {
         return badRequest(new InvalidParamError("email"));
       }
 
-      await this.addAccount.add({ name, email, password });
+      const addedAccount = await this.addAccount.add({ name, email, password });
 
-      return { statusCode: 400 };
+      return { statusCode: 204, body: addedAccount };
     } catch (error) {
       return serverError();
     }
