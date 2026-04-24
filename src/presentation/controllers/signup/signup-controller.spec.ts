@@ -23,7 +23,7 @@ const currentDate = new Date();
 
 const makeAddAccountStub = () => {
   class AddAccountStub implements AddAccount {
-    add(account: CreateAccountDTO): Promise<AddAccountOutput> {
+    async add(account: CreateAccountDTO): Promise<AddAccountOutput> {
       return Promise.resolve({
         id: "valid_id",
         name: "valid_name",
@@ -263,9 +263,7 @@ describe("SignUp Controller", () => {
       },
     };
 
-    vi.spyOn(addAccountStub, "add").mockImplementationOnce(() => {
-      throw new Error();
-    });
+    vi.spyOn(addAccountStub, "add").mockRejectedValueOnce(new Error());
 
     // ============ act ============
     const httpResponse = await sut.handle(httpRequest);
