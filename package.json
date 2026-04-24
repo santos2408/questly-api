@@ -8,6 +8,8 @@
     "docker:up": "docker compose up -d",
     "docker:up:build": "docker compose up --build -d",
     "test": "vitest --passWithNoTests",
+    "test:unit": "npm test -- --watch --config vitest-unit-config.js",
+    "test:int": "npm test -- --watch --config vitest-integration-config.js",
     "test:staged": "vitest related --run --passWithNoTests",
     "test:coverage": "npm test -- --run --coverage",
     "prepare": "husky"
