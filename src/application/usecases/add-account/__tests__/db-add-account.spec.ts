@@ -40,4 +40,21 @@ describe("DbAddAccount UseCase", () => {
     // assert
     expect(encryptSpy).toHaveBeenCalledWith(createAccountDTO.password);
   });
+
+  it("should throw if Encrypter throws", async () => {
+    // arrange
+    const { sut, encrypterStub } = makeSut();
+    const createAccountDTO: CreateAccountDTO = {
+      name: "any_name",
+      email: "any_email@mail.com",
+      password: "any_password",
+    };
+    vi.spyOn(encrypterStub, "encrypt").mockRejectedValueOnce(new Error());
+
+    // act
+    const promise = sut.add(createAccountDTO);
+
+    // assert
+    expect(promise).rejects.toThrowError();
+  });
 });
