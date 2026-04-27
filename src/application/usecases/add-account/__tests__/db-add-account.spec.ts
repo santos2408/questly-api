@@ -28,9 +28,9 @@ describe("DbAddAccount UseCase", () => {
     // arrange
     const { sut, encrypterStub } = makeSut();
     const createAccountDTO: CreateAccountDTO = {
-      name: "string;",
-      email: "string;",
-      password: "string",
+      name: "any_name",
+      email: "any_email@mail.com",
+      password: "any_password",
     };
     const encryptSpy = vi.spyOn(encrypterStub, "encrypt");
 
