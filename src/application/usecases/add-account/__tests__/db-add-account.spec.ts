@@ -1,18 +1,32 @@
 import type { Encrypter } from "../../../protocols/encrypter";
 import type { CreateAccountDTO } from "../create-account-dto";
+import type { AddAccount } from "../add-account";
 import { DbAddAccountUseCase } from "../db-add-account-usecase";
 
-class EncrypterStub implements Encrypter {
-  async encrypt(value: string): Promise<string> {
-    return Promise.resolve("hashed_password");
+type SutTypes = {
+  sut: AddAccount;
+  encrypterStub: Encrypter;
+};
+
+const makeEncrypterStub = (): Encrypter => {
+  class EncrypterStub implements Encrypter {
+    async encrypt(value: string): Promise<string> {
+      return Promise.resolve("hashed_password");
+    }
   }
-}
+  return new EncrypterStub();
+};
+
+const makeSut = (): SutTypes => {
+  const encrypterStub = makeEncrypterStub();
+  const sut = new DbAddAccountUseCase(encrypterStub);
+  return { sut, encrypterStub };
+};
 
 describe("DbAddAccount UseCase", () => {
   it("should call encrypter with correct password", async () => {
     // arrange
-    const encrypterStub = new EncrypterStub();
-    const sut = new DbAddAccountUseCase(encrypterStub);
+    const { sut, encrypterStub } = makeSut();
     const createAccountDTO: CreateAccountDTO = {
       name: "string;",
       email: "string;",
