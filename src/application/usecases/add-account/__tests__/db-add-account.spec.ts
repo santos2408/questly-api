@@ -86,6 +86,23 @@ describe("DbAddAccount UseCase", () => {
     });
   });
 
+  it("should throw if AddAccountRepository throws", async () => {
+    // arrange
+    const { sut, addAccountRepositoryStub } = makeSut();
+    const createAccountDTO: CreateAccountDTO = {
+      name: "any_name",
+      email: "any_email@mail.com",
+      password: "any_password",
+    };
+    vi.spyOn(addAccountRepositoryStub, "add").mockRejectedValueOnce(new Error());
+
+    // act
+    const promise = sut.add(createAccountDTO);
+
+    // assert
+    await expect(promise).rejects.toThrowError();
+  });
+
   // TODO: ...
   // it("should create an entity Account", async () => {});
 
