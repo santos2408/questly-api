@@ -1,6 +1,4 @@
-import type { Encrypter } from "../../../protocols/encrypter";
-import type { CreateAccountDTO } from "../create-account-dto";
-import type { AddAccount } from "../add-account";
+import type { AddAccount, CreateAccountDTO, Encrypter } from "../add-account-protocols";
 import { DbAddAccountUseCase } from "../db-add-account-usecase";
 
 type SutTypes = {
