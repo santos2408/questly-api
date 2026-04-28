@@ -63,7 +63,7 @@ describe("DbAddAccount UseCase", () => {
     const promise = sut.add(createAccountDTO);
 
     // assert
-    expect(promise).rejects.toThrowError();
+    await expect(promise).rejects.toThrowError();
   });
 
   it("should call AddAccountRepository with correct values", async () => {
