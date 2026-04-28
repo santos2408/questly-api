@@ -1,9 +1,18 @@
-import type { AddAccount, CreateAccountDTO, Encrypter } from "../add-account-protocols";
+import type { AddAccount, CreateAccountDTO, Encrypter, AddAccountRepository } from "../add-account-protocols";
 import { DbAddAccountUseCase } from "../db-add-account-usecase";
 
 type SutTypes = {
   sut: AddAccount;
   encrypterStub: Encrypter;
+  addAccountRepositoryStub: AddAccountRepository;
+};
+
+const makeAddAccountRepositoryStub = (): AddAccountRepository => {
+  class AddAccountRepositoryStub implements AddAccountRepository {
+    // TODO: tipar parâmetro corretamente após finalizar a estrutura da entidade Account. Deve receber Account entity
+    async add(account: any): Promise<void> {}
+  }
+  return new AddAccountRepositoryStub();
 };
 
 const makeEncrypterStub = (): Encrypter => {
@@ -17,8 +26,9 @@ const makeEncrypterStub = (): Encrypter => {
 
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypterStub();
-  const sut = new DbAddAccountUseCase(encrypterStub);
-  return { sut, encrypterStub };
+  const addAccountRepositoryStub = makeAddAccountRepositoryStub();
+  const sut = new DbAddAccountUseCase(encrypterStub, addAccountRepositoryStub);
+  return { sut, encrypterStub, addAccountRepositoryStub };
 };
 
 describe("DbAddAccount UseCase", () => {
@@ -55,4 +65,30 @@ describe("DbAddAccount UseCase", () => {
     // assert
     expect(promise).rejects.toThrowError();
   });
+
+  it("should call AddAccountRepository with correct values", async () => {
+    // arrange
+    const { sut, addAccountRepositoryStub } = makeSut();
+    const addSpy = vi.spyOn(addAccountRepositoryStub, "add");
+    const createAccountDTO: CreateAccountDTO = {
+      name: "any_name",
+      email: "any_email@mail.com",
+      password: "any_password",
+    };
+
+    // act
+    await sut.add(createAccountDTO);
+
+    // assert
+    expect(addSpy).toHaveBeenCalledWith({
+      ...createAccountDTO,
+      password: "hashed_password",
+    });
+  });
+
+  // TODO: ...
+  // it("should create an entity Account", async () => {});
+
+  // TODO: ...
+  // it("should return an output account", async () => {});
 });
