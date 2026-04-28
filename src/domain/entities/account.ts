@@ -38,6 +38,8 @@ export class Account extends Entity<AccountInternalProperties> {
     return new Account(props, id);
   }
 
+  // TODO: criar método "restore" para reconstruir o que já existe.
+
   update(name: string): void {
     this.props.name = name;
   }
