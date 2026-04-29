@@ -21,4 +21,12 @@ describe("Bcrypt Adapter", () => {
     await sut.encrypt(value);
     expect(hashSpy).toHaveBeenCalledWith(value, salt);
   });
+
+  it("should return hashed value on success", async () => {
+    vi.spyOn(bcrypt, "hash").mockImplementationOnce(async () => "hashed_value");
+    const { sut } = makeSut();
+    const value = "any_value";
+    const hashedValue = await sut.encrypt(value);
+    expect(hashedValue).toBe("hashed_value");
+  });
 });
