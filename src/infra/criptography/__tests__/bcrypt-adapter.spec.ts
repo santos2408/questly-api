@@ -29,4 +29,12 @@ describe("Bcrypt Adapter", () => {
     const hashedValue = await sut.encrypt(value);
     expect(hashedValue).toBe("hashed_value");
   });
+
+  it("should throw if bcrypt throws", async () => {
+    vi.spyOn(bcrypt, "hash").mockRejectedValueOnce(new Error());
+    const { sut } = makeSut();
+    const value = "any_value";
+    const promise = sut.encrypt(value);
+    expect(promise).rejects.toThrowError();
+  });
 });
