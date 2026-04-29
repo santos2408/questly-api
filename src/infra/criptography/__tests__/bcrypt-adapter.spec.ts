@@ -35,6 +35,6 @@ describe("Bcrypt Adapter", () => {
     const { sut } = makeSut();
     const value = "any_value";
     const promise = sut.encrypt(value);
-    expect(promise).rejects.toThrowError();
+    await expect(promise).rejects.toThrowError();
   });
 });
