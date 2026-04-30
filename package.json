@@ -21,6 +21,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.3.0",
+    "@testcontainers/postgresql": "^11.14.0",
     "@types/bcrypt": "^6.0.0",
     "@types/node": "^25.3.0",
     "@types/pg": "^8.20.0",
@@ -39,7 +40,6 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "@testcontainers/postgresql": "^11.14.0",
     "bcrypt": "^6.0.0",
     "pg": "^8.20.0",
     "uuid": "^14.0.0",
