@@ -8,7 +8,11 @@ type SutTypes = {
   addAccountRepositoryStub: AddAccountRepository;
 };
 
-// TODO: criar um factory do createAccountDTO
+const makeCreateAccountDTO = (): CreateAccountDTO => ({
+  name: "any_name",
+  email: "any_email@mail.com",
+  password: "any_password",
+});
 
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
@@ -40,11 +44,7 @@ describe("DbAddAccount UseCase", () => {
   it("should call encrypter with correct password", async () => {
     // arrange
     const { sut, encrypterStub } = makeSut();
-    const createAccountDTO: CreateAccountDTO = {
-      name: "any_name",
-      email: "any_email@mail.com",
-      password: "any_password",
-    };
+    const createAccountDTO = makeCreateAccountDTO();
     const encryptSpy = vi.spyOn(encrypterStub, "encrypt");
 
     // act
@@ -57,11 +57,7 @@ describe("DbAddAccount UseCase", () => {
   it("should throw if Encrypter throws", async () => {
     // arrange
     const { sut, encrypterStub } = makeSut();
-    const createAccountDTO: CreateAccountDTO = {
-      name: "any_name",
-      email: "any_email@mail.com",
-      password: "any_password",
-    };
+    const createAccountDTO = makeCreateAccountDTO();
     vi.spyOn(encrypterStub, "encrypt").mockRejectedValueOnce(new Error());
 
     // act
@@ -75,11 +71,7 @@ describe("DbAddAccount UseCase", () => {
     // arrange
     const { sut, addAccountRepositoryStub } = makeSut();
     const addSpy = vi.spyOn(addAccountRepositoryStub, "add");
-    const createAccountDTO: CreateAccountDTO = {
-      name: "any_name",
-      email: "any_email@mail.com",
-      password: "any_password",
-    };
+    const createAccountDTO = makeCreateAccountDTO();
     const account = Account.create(createAccountDTO);
     vi.spyOn(Account, "create").mockReturnValueOnce(account);
 
@@ -93,11 +85,7 @@ describe("DbAddAccount UseCase", () => {
   it("should throw if AddAccountRepository throws", async () => {
     // arrange
     const { sut, addAccountRepositoryStub } = makeSut();
-    const createAccountDTO: CreateAccountDTO = {
-      name: "any_name",
-      email: "any_email@mail.com",
-      password: "any_password",
-    };
+    const createAccountDTO = makeCreateAccountDTO();
     vi.spyOn(addAccountRepositoryStub, "add").mockRejectedValueOnce(new Error());
 
     // act
@@ -110,11 +98,7 @@ describe("DbAddAccount UseCase", () => {
   it("should return an output account on success", async () => {
     // arrange
     const { sut } = makeSut();
-    const createAccountDTO: CreateAccountDTO = {
-      name: "any_name",
-      email: "any_email@mail.com",
-      password: "hashed_password",
-    };
+    const createAccountDTO: CreateAccountDTO = { ...makeCreateAccountDTO(), password: "hashed_password" };
     const account = Account.create(createAccountDTO);
     vi.spyOn(Account, "create").mockReturnValueOnce(account);
 
