@@ -1,11 +1,14 @@
 import type { AddAccount, CreateAccountDTO, Encrypter, AddAccountRepository } from "../add-account-protocols";
 import { DbAddAccountUseCase } from "../db-add-account-usecase";
+import { Account } from "../../../../domain/entities/account";
 
 type SutTypes = {
   sut: AddAccount;
   encrypterStub: Encrypter;
   addAccountRepositoryStub: AddAccountRepository;
 };
+
+// TODO: criar um factory do createAccountDTO
 
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
@@ -32,6 +35,8 @@ const makeSut = (): SutTypes => {
 };
 
 describe("DbAddAccount UseCase", () => {
+  // TODO: adicionar no beforeEach clean all mocks para garantir limpeza em cada teste
+
   it("should call encrypter with correct password", async () => {
     // arrange
     const { sut, encrypterStub } = makeSut();
@@ -75,15 +80,14 @@ describe("DbAddAccount UseCase", () => {
       email: "any_email@mail.com",
       password: "any_password",
     };
+    const account = Account.create(createAccountDTO);
+    vi.spyOn(Account, "create").mockReturnValueOnce(account);
 
     // act
     await sut.add(createAccountDTO);
 
     // assert
-    expect(addSpy).toHaveBeenCalledWith({
-      ...createAccountDTO,
-      password: "hashed_password",
-    });
+    expect(addSpy).toHaveBeenCalledWith(account);
   });
 
   it("should throw if AddAccountRepository throws", async () => {
@@ -103,9 +107,22 @@ describe("DbAddAccount UseCase", () => {
     await expect(promise).rejects.toThrowError();
   });
 
-  // TODO: ...
-  // it("should create an entity Account", async () => {});
+  it("should return an output account on success", async () => {
+    // arrange
+    const { sut } = makeSut();
+    const createAccountDTO: CreateAccountDTO = {
+      name: "any_name",
+      email: "any_email@mail.com",
+      password: "hashed_password",
+    };
+    const account = Account.create(createAccountDTO);
+    vi.spyOn(Account, "create").mockReturnValueOnce(account);
 
-  // TODO: ...
-  // it("should return an output account", async () => {});
+    // act
+    const accountOutput = await sut.add(createAccountDTO);
+
+    // assert
+    const expected = account.toJSON();
+    expect(accountOutput).toEqual(expected);
+  });
 });

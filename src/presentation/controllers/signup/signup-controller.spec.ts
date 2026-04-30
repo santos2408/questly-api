@@ -23,7 +23,7 @@ const currentDate = new Date();
 
 const makeAddAccountStub = () => {
   class AddAccountStub implements AddAccount {
-    async add(account: CreateAccountDTO): Promise<AddAccountOutput> {
+    async add(accountDTO: CreateAccountDTO): Promise<AddAccountOutput> {
       return Promise.resolve({
         id: "valid_id",
         name: "valid_name",
