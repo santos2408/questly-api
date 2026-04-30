@@ -1,5 +1,5 @@
 import type { AddAccount, AddAccountOutput, AddAccountRepository, CreateAccountDTO, Encrypter } from "./add-account-protocols";
-import { ROLES, STATUS } from "../../../domain/constants";
+import { Account } from "../../../domain/entities/account";
 
 export class DbAddAccountUseCase implements AddAccount {
   private readonly encrypter: Encrypter;
@@ -10,17 +10,11 @@ export class DbAddAccountUseCase implements AddAccount {
     this.addAccountRepository = addAccountRepository;
   }
 
-  async add(account: CreateAccountDTO): Promise<AddAccountOutput> {
-    const hashedPassword = await this.encrypter.encrypt(account.password);
-    await this.addAccountRepository.add({ ...account, password: hashedPassword });
-
-    return {
-      id: "string",
-      name: "string",
-      email: "string",
-      status: STATUS.ACTIVE,
-      role: ROLES.USER,
-      createdAt: new Date(),
-    };
+  async add(accountDTO: CreateAccountDTO): Promise<AddAccountOutput> {
+    const hashedPassword = await this.encrypter.encrypt(accountDTO.password);
+    const account = Account.create({ ...accountDTO, password: hashedPassword });
+    await this.addAccountRepository.add(account);
+    const accountOutput = account.toJSON();
+    return accountOutput;
   }
 }
