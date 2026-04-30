@@ -16,8 +16,7 @@ const makeCreateAccountDTO = (): CreateAccountDTO => ({
 
 const makeAddAccountRepositoryStub = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
-    // TODO: tipar parâmetro corretamente após finalizar a estrutura da entidade Account. Deve receber Account entity
-    async add(account: any): Promise<void> {}
+    async add(account: Account): Promise<void> {}
   }
   return new AddAccountRepositoryStub();
 };
@@ -39,8 +38,6 @@ const makeSut = (): SutTypes => {
 };
 
 describe("DbAddAccount UseCase", () => {
-  // TODO: adicionar no beforeEach clean all mocks para garantir limpeza em cada teste
-
   it("should call encrypter with correct password", async () => {
     // arrange
     const { sut, encrypterStub } = makeSut();
