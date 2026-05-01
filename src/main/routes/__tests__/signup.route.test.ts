@@ -11,6 +11,6 @@ describe("SignUp Routes", () => {
       password: password,
       passwordConfirmation: password,
     };
-    await request(app).post("/api/signup").send(bodyRequest).expect(201);
+    await request(app).post("/api/v1/signup").send(bodyRequest).expect(201);
   });
 });
