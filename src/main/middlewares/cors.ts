@@ -1,0 +1,9 @@
+import type { Request, Response, NextFunction } from "express";
+
+export const cors = (req: Request, res: Response, next: NextFunction) => {
+  // TODO: verificar liberação do CORS para que seja apenas para o domínio da aplicação front-end
+  res.set("access-control-allow-origin", "*");
+  res.set("access-control-allow-methods", "*");
+  res.set("access-control-allow-headers", "*");
+  next();
+};
