@@ -2,7 +2,7 @@ import { SignUpController } from "../../presentation/controllers/signup/signup-c
 import { EmailValidatorAdapter } from "../../presentation/utils/email-validator-adapter";
 import { DbAddAccountUseCase } from "../../application/usecases/add-account";
 import { BcryptAdapter } from "../../infra/criptography/bcrypt-adapter";
-import { AddAccountPostgresRepository } from "../../infra/database/postgres/account-repository/postgres-account-repository";
+import { AddAccountPostgresRepository } from "../../infra/database/postgres/repositories/postgres-account-repository";
 
 export const makeSignUpController = (): SignUpController => {
   const salt = 12;
