@@ -1,9 +1,9 @@
 import type { CreateAccountDTO } from "../../../../../application/usecases/add-account";
-import { PostgreSqlContainer, StartedPostgreSqlContainer } from "@testcontainers/postgresql";
 import pg from "pg";
 import { PostgresHelper } from "../../helpers/postgres-helper";
 import { Account } from "../../../../../domain/entities/account";
 import { AddAccountPostgresRepository } from "../postgres-account-repository";
+import { postgresTestcontainer } from "../../../../../../postgres-testcontainer";
 
 const makeSut = () => {
   const sut = new AddAccountPostgresRepository();
@@ -11,23 +11,10 @@ const makeSut = () => {
 };
 
 let connection: pg.Pool;
-let container: PostgreSqlContainer;
-let databaseContainer: StartedPostgreSqlContainer;
 
 describe("Account PostgreSQL Repository", () => {
   beforeAll(async () => {
-    container = new PostgreSqlContainer("postgres:18-alpine");
-    databaseContainer = await container.start();
-
-    const config: pg.PoolConfig = {
-      host: databaseContainer.getHost(),
-      port: databaseContainer.getPort(),
-      database: databaseContainer.getDatabase(),
-      user: databaseContainer.getUsername(),
-      password: databaseContainer.getPassword(),
-    };
-
-    await PostgresHelper.connect(config);
+    await postgresTestcontainer.initialize();
     connection = PostgresHelper.getConnection();
 
     await connection.query(`CREATE TABLE accounts (
@@ -50,7 +37,7 @@ describe("Account PostgreSQL Repository", () => {
   afterAll(async () => {
     await connection.query("TRUNCATE TABLE accounts");
     await PostgresHelper.disconnect();
-    await databaseContainer.stop();
+    await postgresTestcontainer.stop();
   });
 
   it("should create an account on success", async () => {

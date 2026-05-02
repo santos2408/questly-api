@@ -7,6 +7,7 @@ export const PostgresHelper = {
 
   async connect(config: pg.PoolConfig) {
     this.pool = new Pool({ ...config });
+    this.pool.query("SELECT 1");
   },
 
   async disconnect() {
