@@ -1,8 +1,8 @@
-import type { EmailValidator } from "../../protocols/email-validator";
-import type { AddAccount, CreateAccountDTO, AddAccountOutput } from "../../../application/usecases/add-account";
-import { ROLES, STATUS } from "../../../domain/constants";
-import { MissingParamError, InvalidParamError, ServerError } from "../../errors";
-import { SignUpController } from "./signup-controller";
+import type { EmailValidator } from "../../protocols/email-validator.js";
+import type { AddAccount, CreateAccountDTO, AddAccountOutput } from "../../../application/usecases/add-account/index.js";
+import { ROLES, STATUS } from "../../../domain/constants/index.js";
+import { MissingParamError, InvalidParamError, ServerError } from "../../errors/index.js";
+import { SignUpController } from "./signup-controller.js";
 
 interface SutTypes {
   sut: SignUpController;

@@ -30,3 +30,18 @@ presentation depende de application e, em alguns projetos, de tipos muito estáv
 application depende de domain
 infra depende de application e/ou domain para implementar contratos
 domain não depende de nenhuma outra camada
+
+================== GERAR TIMESTAMP PARA MIGRATION ==================
+
+const now = new Date();
+
+const timestamp = [
+now.getFullYear(),
+String(now.getMonth() + 1).padStart(2, "0"),
+String(now.getDate()).padStart(2, "0"),
+String(now.getHours()).padStart(2, "0"),
+String(now.getMinutes()).padStart(2, "0"),
+String(now.getSeconds()).padStart(2, "0"),
+].join("");
+
+console.log(timestamp);

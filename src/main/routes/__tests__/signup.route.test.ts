@@ -1,9 +1,10 @@
 import request from "supertest";
 import pg from "pg";
-import { makeApp } from "../../config/app";
+import { makeApp } from "../../config/app.js";
 import { faker } from "@faker-js/faker";
-import { PostgresHelper } from "../../../infra/database/postgres/helpers/postgres-helper";
-import env from "../../config/env";
+import { PostgresHelper } from "../../../infra/database/postgres/helpers/postgres-helper.js";
+import env from "../../config/env.js";
+import { migrationsHelper } from "../../../infra/database/postgres/helpers/migrations-helper.js";
 
 let connection: pg.Pool;
 
@@ -13,18 +14,7 @@ describe("SignUp Routes", async () => {
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
     connection = PostgresHelper.getConnection();
-
-    await connection.query(`CREATE TABLE IF NOT EXISTS accounts (
-        id UUID PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        role VARCHAR(20) NOT NULL,
-        status VARCHAR(20) NOT NULL,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      )
-    `);
+    await migrationsHelper.run(connection);
   });
 
   beforeEach(async () => {

@@ -1,5 +1,5 @@
-import type { Status } from "../../../domain/constants/status";
-import type { Roles } from "../../../domain/constants/roles";
+import type { Status } from "../../../domain/constants/status.js";
+import type { Roles } from "../../../domain/constants/roles.js";
 
 export type AddAccountOutput = {
   id: string;

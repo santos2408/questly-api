@@ -1,4 +1,4 @@
-import { deepFreeze } from "../utils/objects";
+import { deepFreeze } from "../utils/objects.js";
 
 export abstract class ValueObject<Value = any> {
   private readonly _value: Value;

@@ -1,6 +1,6 @@
-import type { AddAccountRepository } from "../../../../domain/protocols/account/add-account-repository";
-import { Account } from "../../../../domain/entities/account";
-import { PostgresHelper } from "../helpers/postgres-helper";
+import type { AddAccountRepository } from "../../../../domain/protocols/account/add-account-repository.js";
+import { Account } from "../../../../domain/entities/account.js";
+import { PostgresHelper } from "../helpers/postgres-helper.js";
 
 export class AddAccountPostgresRepository implements AddAccountRepository {
   async add(account: Account): Promise<void> {

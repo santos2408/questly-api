@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ValueObject } from "../value-object";
+import { ValueObject } from "../value-object.js";
 
 class ValueObjectStub extends ValueObject {}
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { Entity } from "../../entities/entity";
-import { UniqueEntityId } from "../../value-objects/unique-entity-id-value-object";
+import { Entity } from "../../entities/entity.js";
+import { UniqueEntityId } from "../../value-objects/unique-entity-id-value-object.js";
 
 class EntityStub extends Entity<{ props1: string; prop2: number }> {}
 

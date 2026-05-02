@@ -1,1 +1,1 @@
-export type * from "./encrypter";
+export type * from "./encrypter.js";

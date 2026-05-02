@@ -1,5 +1,5 @@
 import validator from "validator";
-import { EmailValidatorAdapter } from "../email-validator-adapter";
+import { EmailValidatorAdapter } from "../email-validator-adapter.js";
 
 vi.mock("validator", () => ({
   default: {

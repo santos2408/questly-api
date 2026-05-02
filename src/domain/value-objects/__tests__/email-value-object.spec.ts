@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { Email } from "../email-value-object";
-import { InvalidEmailError } from "./../../errors/invalid-email-error";
+import { Email } from "../email-value-object.js";
+import { InvalidEmailError } from "./../../errors/invalid-email-error.js";
 
 const makeEmail = (localLength: number, domainLength: number): string => {
   const local = "a".repeat(localLength);

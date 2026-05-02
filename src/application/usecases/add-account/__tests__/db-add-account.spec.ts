@@ -1,6 +1,6 @@
-import type { AddAccount, CreateAccountDTO, Encrypter, AddAccountRepository } from "../add-account-protocols";
-import { DbAddAccountUseCase } from "../db-add-account-usecase";
-import { Account } from "../../../../domain/entities/account";
+import type { AddAccount, CreateAccountDTO, Encrypter, AddAccountRepository } from "../add-account-protocols.js";
+import { DbAddAccountUseCase } from "../db-add-account-usecase.js";
+import { Account } from "../../../../domain/entities/account.js";
 
 type SutTypes = {
   sut: AddAccount;

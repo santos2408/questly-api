@@ -1,5 +1,5 @@
-import type { AddAccount, AddAccountOutput, AddAccountRepository, CreateAccountDTO, Encrypter } from "./add-account-protocols";
-import { Account } from "../../../domain/entities/account";
+import type { AddAccount, AddAccountOutput, AddAccountRepository, CreateAccountDTO, Encrypter } from "./add-account-protocols.js";
+import { Account } from "../../../domain/entities/account.js";
 
 export class DbAddAccountUseCase implements AddAccount {
   private readonly encrypter: Encrypter;

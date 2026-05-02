@@ -1,4 +1,4 @@
-import { Account } from "../../entities/account";
+import { Account } from "../../entities/account.js";
 
 export interface AddAccountRepository {
   add(account: Account): Promise<void>;

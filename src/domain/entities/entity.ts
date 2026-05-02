@@ -1,4 +1,4 @@
-import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
+import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object.js";
 
 export abstract class Entity<Props> {
   protected props: Props;

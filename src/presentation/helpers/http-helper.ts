@@ -1,5 +1,5 @@
-import type { HttpResponse } from "../protocols/http";
-import { ServerError } from "../errors";
+import type { HttpResponse } from "../protocols/http.js";
+import { ServerError } from "../errors/index.js";
 
 // TODO: corrigir retorno de status created, o correto é 201
 export const created = (data: any): HttpResponse => ({

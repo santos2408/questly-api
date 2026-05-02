@@ -1,3 +1,3 @@
-export * from "./invalid-param-error";
-export * from "./missing-param-error";
-export * from "./server-error";
+export * from "./invalid-param-error.js";
+export * from "./missing-param-error.js";
+export * from "./server-error.js";

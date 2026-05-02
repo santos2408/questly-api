@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
-import { UniqueEntityId } from "../unique-entity-id-value-object";
-import { InvalidUuidError } from "../../errors/invalid-uuid-error";
+import { UniqueEntityId } from "../unique-entity-id-value-object.js";
+import { InvalidUuidError } from "../../errors/invalid-uuid-error.js";
 
 describe("UniqueEntityIdValueObject Unit Tests", () => {
   it("should throw error when 'uuid' is invalid", () => {

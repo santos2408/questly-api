@@ -1,6 +1,6 @@
-import { Entity } from "./entity";
-import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object";
-import { ROLES, STATUS, type Roles, Status } from "../constants";
+import { Entity } from "./entity.js";
+import { UniqueEntityId } from "../value-objects/unique-entity-id-value-object.js";
+import { ROLES, STATUS, type Roles, Status } from "../constants/index.js";
 
 export type AccountProperties = {
   name: string;

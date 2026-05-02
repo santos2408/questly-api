@@ -1,5 +1,5 @@
-import { ValueObject } from "./value-object";
-import { InvalidEmailError } from "../errors/invalid-email-error";
+import { ValueObject } from "./value-object.js";
+import { InvalidEmailError } from "../errors/invalid-email-error.js";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

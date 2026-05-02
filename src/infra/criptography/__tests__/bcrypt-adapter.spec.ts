@@ -1,6 +1,6 @@
-import type { Encrypter } from "../../../application/protocols";
+import type { Encrypter } from "../../../application/protocols/index.js";
 import bcrypt from "bcrypt";
-import { BcryptAdapter } from "../bcrypt-adapter";
+import { BcryptAdapter } from "../bcrypt-adapter.js";
 
 type SutTypes = {
   sut: Encrypter;

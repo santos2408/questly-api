@@ -1,5 +1,5 @@
 import request from "supertest";
-import { makeApp } from "../../config/app";
+import { makeApp } from "../../config/app.js";
 
 describe("Body Parser Middleware", async () => {
   const app = await makeApp();

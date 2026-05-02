@@ -1,5 +1,5 @@
-export type { AddAccountRepository } from "../../../domain/protocols/account/add-account-repository";
-export type { AddAccount } from "./add-account";
-export type { AddAccountOutput } from "./add-account-output";
-export type { CreateAccountDTO } from "./create-account-dto";
-export type { Encrypter } from "../../protocols/encrypter";
+export type { AddAccountRepository } from "../../../domain/protocols/account/add-account-repository.js";
+export type { AddAccount } from "./add-account.js";
+export type { AddAccountOutput } from "./add-account-output.js";
+export type { CreateAccountDTO } from "./create-account-dto.js";
+export type { Encrypter } from "../../protocols/encrypter.js";

@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
-import { InvalidUuidError } from "../errors/invalid-uuid-error";
-import { ValueObject } from "./value-object";
+import { InvalidUuidError } from "../errors/invalid-uuid-error.js";
+import { ValueObject } from "./value-object.js";
 import { validate as uuidValidate } from "uuid";
 
 export class UniqueEntityId extends ValueObject<string> {

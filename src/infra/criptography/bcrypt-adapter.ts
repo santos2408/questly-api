@@ -1,4 +1,4 @@
-import type { Encrypter } from "../../application/protocols";
+import type { Encrypter } from "../../application/protocols/index.js";
 import bcrypt from "bcrypt";
 
 export class BcryptAdapter implements Encrypter {

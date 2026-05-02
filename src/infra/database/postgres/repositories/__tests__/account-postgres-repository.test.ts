@@ -1,9 +1,10 @@
-import type { CreateAccountDTO } from "../../../../../application/usecases/add-account";
+import type { CreateAccountDTO } from "../../../../../application/usecases/add-account/index.js";
 import pg from "pg";
-import { PostgresHelper } from "../../helpers/postgres-helper";
-import { Account } from "../../../../../domain/entities/account";
-import { AddAccountPostgresRepository } from "../postgres-account-repository";
-import env from "../../../../../main/config/env";
+import { PostgresHelper } from "../../helpers/postgres-helper.js";
+import { Account } from "../../../../../domain/entities/account.js";
+import { AddAccountPostgresRepository } from "../postgres-account-repository.js";
+import env from "../../../../../main/config/env.js";
+import { migrationsHelper } from "../../helpers/migrations-helper.js";
 
 const makeSut = () => {
   const sut = new AddAccountPostgresRepository();
@@ -16,18 +17,7 @@ describe("Account PostgreSQL Repository", () => {
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
     connection = PostgresHelper.getConnection();
-
-    await connection.query(`CREATE TABLE IF NOT EXISTS accounts (
-        id UUID PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
-        password VARCHAR(255) NOT NULL,
-        role VARCHAR(20) NOT NULL,
-        status VARCHAR(20) NOT NULL,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      )
-    `);
+    await migrationsHelper.run(connection);
   });
 
   beforeEach(async () => {
