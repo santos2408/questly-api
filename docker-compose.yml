@@ -4,6 +4,11 @@ services:
     container_name: questly-typescript-app
     volumes:
       - .:/home/node/questly
-
-# prod: postgres:18-bookworm
-# tests: postgres:18-alpine
+  postgres:
+    image: postgres:18-bookworm
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: questly
