@@ -1,7 +1,15 @@
-import app from "./config/app";
+import pg from "pg";
+import env from "./config/env";
+import { PostgresHelper } from "../infra/database/postgres/helpers/postgres-helper";
 
-const port = 4000;
+const config: pg.PoolConfig = { connectionString: env.databaseUrl };
 
-app.listen(4000, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+(async () => {
+  try {
+    await PostgresHelper.connect(config);
+    const app = await (await import("./config/app")).makeApp();
+    app.listen(env.port, () => console.log(`Server running at http://localhost:${env.port}`));
+  } catch (error) {
+    console.error("Failed to start server:", error);
+  }
+})();

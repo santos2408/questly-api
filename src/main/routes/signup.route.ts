@@ -1,8 +1,7 @@
-import type { Request, Response, Router } from "express";
+import type { Router } from "express";
+import { makeSignUpController } from "../factories/signup-controller-factory";
+import { routeAdapter } from "../adapters/express-route-adapter";
 
 export default (router: Router) => {
-  router.post("/v1/signup", (req: Request, res: Response) => {
-    res.statusCode = 201;
-    res.json({ success: true });
-  });
+  router.post("/v1/signup", routeAdapter(makeSignUpController()));
 };

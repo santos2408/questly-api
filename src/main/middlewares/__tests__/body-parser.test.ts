@@ -1,7 +1,9 @@
 import request from "supertest";
-import app from "../../config/app";
+import { makeApp } from "../../config/app";
 
-describe("Body Parser Middleware", () => {
+describe("Body Parser Middleware", async () => {
+  const app = await makeApp();
+
   it("should parse body request as json", async () => {
     app.post("/test_body_parser", (req, res) => {
       res.send(req.body);

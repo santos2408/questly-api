@@ -3,7 +3,7 @@ import pg from "pg";
 import { PostgresHelper } from "../../helpers/postgres-helper";
 import { Account } from "../../../../../domain/entities/account";
 import { AddAccountPostgresRepository } from "../postgres-account-repository";
-import { postgresTestcontainer } from "../../../../../../postgres-testcontainer";
+import env from "../../../../../main/config/env";
 
 const makeSut = () => {
   const sut = new AddAccountPostgresRepository();
@@ -14,10 +14,10 @@ let connection: pg.Pool;
 
 describe("Account PostgreSQL Repository", () => {
   beforeAll(async () => {
-    await postgresTestcontainer.initialize();
+    await PostgresHelper.connect({ connectionString: env.databaseUrl });
     connection = PostgresHelper.getConnection();
 
-    await connection.query(`CREATE TABLE accounts (
+    await connection.query(`CREATE TABLE IF NOT EXISTS accounts (
         id UUID PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
@@ -37,7 +37,6 @@ describe("Account PostgreSQL Repository", () => {
   afterAll(async () => {
     await connection.query("TRUNCATE TABLE accounts");
     await PostgresHelper.disconnect();
-    await postgresTestcontainer.stop();
   });
 
   it("should create an account on success", async () => {
