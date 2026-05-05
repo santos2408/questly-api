@@ -16,7 +16,7 @@ let connection: pg.Pool;
 describe("Account PostgreSQL Repository", () => {
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
-    connection = PostgresHelper.getConnection();
+    connection = await PostgresHelper.getConnection();
     await migrationsHelper.run(connection);
   });
 

@@ -13,7 +13,7 @@ describe("SignUp Routes", async () => {
 
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
-    connection = PostgresHelper.getConnection();
+    connection = await PostgresHelper.getConnection();
     await migrationsHelper.run(connection);
   });
 
