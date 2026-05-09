@@ -11,12 +11,12 @@ const makeSut = () => {
   return { sut };
 };
 
-let connection: pg.Pool;
+let connection: pg.PoolClient;
 
 describe("Account PostgreSQL Repository", () => {
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
-    connection = await PostgresHelper.getConnection();
+    connection = await PostgresHelper.getClient();
     await migrationsHelper.run(connection);
   });
 
@@ -26,6 +26,7 @@ describe("Account PostgreSQL Repository", () => {
 
   afterAll(async () => {
     await connection.query("TRUNCATE TABLE accounts");
+    connection.release();
     await PostgresHelper.disconnect();
   });
 

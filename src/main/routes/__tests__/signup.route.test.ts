@@ -6,14 +6,14 @@ import { PostgresHelper } from "../../../infra/database/postgres/helpers/postgre
 import env from "../../config/env.js";
 import { migrationsHelper } from "../../../infra/database/postgres/helpers/migrations-helper.js";
 
-let connection: pg.Pool;
+let connection: pg.PoolClient;
 
 describe("SignUp Routes", async () => {
   const app = await makeApp();
 
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
-    connection = await PostgresHelper.getConnection();
+    connection = await PostgresHelper.getClient();
     await migrationsHelper.run(connection);
   });
 
@@ -23,6 +23,7 @@ describe("SignUp Routes", async () => {
 
   afterAll(async () => {
     await connection.query("TRUNCATE TABLE accounts");
+    connection.release();
     await PostgresHelper.disconnect();
   });
 

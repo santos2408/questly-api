@@ -16,7 +16,7 @@ export const PostgresHelper = {
     await this.pool.end();
   },
 
-  async getConnection() {
+  async getConnection(): Promise<pg.Pool> {
     const isConnected = this.isConnected();
 
     if (!isConnected) {
@@ -26,11 +26,11 @@ export const PostgresHelper = {
     return this.pool;
   },
 
-  async getClient() {
+  async getClient(): Promise<pg.PoolClient> {
     return await this.pool.connect();
   },
 
-  isConnected() {
+  isConnected(): boolean {
     return this.pool.ended ? false : true;
   },
 };
