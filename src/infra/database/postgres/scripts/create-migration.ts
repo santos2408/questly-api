@@ -7,33 +7,32 @@ const __dirname = path.dirname(__filename);
 
 const makeTimestamp = () => {
   const now = new Date();
-  return [
-    now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, "0"),
-    String(now.getDate()).padStart(2, "0"),
-    String(now.getHours()).padStart(2, "0"),
-    String(now.getMinutes()).padStart(2, "0"),
-    String(now.getSeconds()).padStart(2, "0"),
-  ].join("");
+  const fullyear = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+  return [fullyear, month, day, hours, minutes, seconds].join("");
 };
 
 const makeTemplate = (migrationName: string) => {
-  return `import type pg from "pg";
+  return `import type pg from "pg";  
   
-export const name = "${migrationName}";
+    export const name = "${migrationName}";
 
-export async function up(client: pg.PoolClient): Promise<void> {
-  await client.query(\`
-    -- TODO: write your migration here
-\`);
-}
+    export async function up(client: pg.PoolClient): Promise<void> {
+      await client.query(\`
+        -- TODO: write your migration here
+    \`);
+    }
 
-export async function down(client: pg.PoolClient): Promise<void> {
-  await client.query(\`
-    -- TODO: write your rollback here
-\`);
-}
-`;
+    export async function down(client: pg.PoolClient): Promise<void> {
+      await client.query(\`
+        -- TODO: write your rollback here
+    \`);
+    }
+  `;
 };
 
 try {
