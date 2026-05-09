@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "type-check": "tsc --noEmit",
     "start": "node dist/main/server.js",
     "dev": "tsx src/main/server.ts",
+    "migration:create": "tsx src/infra/database/postgres/scripts/create-migration.ts",
+    "migration:create:prod": "node src/infra/database/postgres/scripts/create-migration.js",
+    "migrate": "tsx src/infra/database/postgres/scripts/run-migrations.ts",
+    "migrate:prod": "node dist/infra/database/postgres/scripts/run-migrations.js",
     "docker:up:db": "docker compose up -d postgres",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down -v",
