@@ -2,8 +2,8 @@ import type pg from "pg";
 
 export const name = "20260502164934_create_accounts_table";
 
-export async function up(connection: pg.Pool): Promise<void> {
-  await connection.query(`CREATE TABLE IF NOT EXISTS accounts (
+export async function up(client: pg.PoolClient): Promise<void> {
+  await client.query(`CREATE TABLE IF NOT EXISTS accounts (
       id UUID PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL UNIQUE,
@@ -16,6 +16,6 @@ export async function up(connection: pg.Pool): Promise<void> {
   `);
 }
 
-export async function down(connection: pg.Pool): Promise<void> {
-  await connection.query("DROP TABLE accounts");
+export async function down(client: pg.PoolClient): Promise<void> {
+  await client.query("DROP TABLE accounts");
 }
