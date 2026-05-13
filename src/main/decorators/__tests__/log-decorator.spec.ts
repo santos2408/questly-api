@@ -22,20 +22,20 @@ const makeSut = (): SutTypes => {
   return { sut, controllerStub };
 };
 
+const httpRequest: HttpRequest = {
+  body: {
+    honeypot: "any_value",
+    name: "any_name",
+    email: "any_email@mail.com",
+    password: "any_password",
+    passwordConfirmation: "any_password",
+  },
+};
+
 describe("Log Controller Decorator", () => {
   it("should call controller.handle", async () => {
     // arrange
-
     const { sut, controllerStub } = makeSut();
-    const httpRequest = {
-      body: {
-        honeypot: "any_value",
-        name: "any_name",
-        email: "any_email@mail.com",
-        password: "any_password",
-        passwordConfirmation: "any_password",
-      },
-    };
     const handleSpy = vi.spyOn(controllerStub, "handle");
 
     // act
@@ -43,5 +43,17 @@ describe("Log Controller Decorator", () => {
 
     // assert
     expect(handleSpy).toHaveBeenCalledWith(httpRequest);
+  });
+
+  it("should return an HttpResponse", async () => {
+    // arrange
+    const { sut } = makeSut();
+
+    // act
+    const httpResponse = await sut.handle(httpRequest);
+
+    // assert
+    expect(httpResponse.statusCode).toBeDefined();
+    expect(httpResponse.body).toBeDefined();
   });
 });
