@@ -1,4 +1,5 @@
 import type { Controller } from "../../../presentation/protocols/controller.js";
+import type { LogErrorRepository } from "../../../domain/protocols/decorators/log-error-repository.js";
 import type { HttpRequest, HttpResponse } from "../../../presentation/protocols/http.js";
 import { LogControllerDecorator } from "../log-decorator.js";
 
@@ -11,15 +12,25 @@ const makeController = (): Controller => {
   return new ControllerStub();
 };
 
+const makeLogErrorRepositoryStub = () => {
+  class LogErrorRepositoryStub implements LogErrorRepository {
+    async log(stack: string): Promise<void> {}
+  }
+
+  return new LogErrorRepositoryStub();
+};
+
 type SutTypes = {
   sut: LogControllerDecorator;
   controllerStub: Controller;
+  logErrorRepositoryStub: LogErrorRepository;
 };
 
 const makeSut = (): SutTypes => {
   const controllerStub = makeController();
-  const sut = new LogControllerDecorator(controllerStub);
-  return { sut, controllerStub };
+  const logErrorRepositoryStub = makeLogErrorRepositoryStub();
+  const sut = new LogControllerDecorator(controllerStub, logErrorRepositoryStub);
+  return { sut, controllerStub, logErrorRepositoryStub };
 };
 
 const httpRequest: HttpRequest = {
@@ -54,5 +65,21 @@ describe("Log Controller Decorator", () => {
 
     // assert
     expect(httpResponse).toEqual({ statusCode: 200, body: {} });
+  });
+
+  it("should call LogErrorRepository with correct stack error", async () => {
+    // arrange
+    const { sut, controllerStub, logErrorRepositoryStub } = makeSut();
+    const error = new Error();
+    error.stack = "any_value";
+
+    vi.spyOn(controllerStub, "handle").mockResolvedValueOnce({ statusCode: 500, body: error });
+    const logSpy = vi.spyOn(logErrorRepositoryStub, "log");
+
+    // act
+    await sut.handle(httpRequest);
+
+    // assert
+    expect(logSpy).toHaveBeenCalledWith(error.stack);
   });
 });
