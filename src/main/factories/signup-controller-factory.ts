@@ -3,9 +3,9 @@ import { SignUpController } from "../../presentation/controllers/signup/signup-c
 import { EmailValidatorAdapter } from "../../presentation/utils/email-validator-adapter.js";
 import { DbAddAccountUseCase } from "../../application/usecases/add-account/index.js";
 import { BcryptAdapter } from "../../infra/criptography/bcrypt-adapter.js";
-import { AddAccountPostgresRepository } from "../../infra/database/postgres/repositories/postgres-account-repository.js";
+import { AddAccountPostgresRepository } from "../../infra/database/postgres/repositories/add-account-postgres-repository.js";
 import { LogErrorControllerDecorator } from "../decorators/log-error-controller-decorator.js";
-import { LogErrorPostgresRepository } from "../../infra/database/postgres/repositories/postgres-log-error-repository.js";
+import { LogErrorPostgresRepository } from "../../infra/database/postgres/repositories/log-error-postgres-repository.js";
 
 export const makeSignUpController = (): Controller => {
   const salt = 12;

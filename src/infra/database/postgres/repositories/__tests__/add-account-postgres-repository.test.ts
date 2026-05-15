@@ -2,7 +2,7 @@ import type { CreateAccountDTO } from "../../../../../application/usecases/add-a
 import pg from "pg";
 import { PostgresHelper } from "../../helpers/postgres-helper.js";
 import { Account } from "../../../../../domain/entities/account.js";
-import { AddAccountPostgresRepository } from "../postgres-account-repository.js";
+import { AddAccountPostgresRepository } from "../add-account-postgres-repository.js";
 import env from "../../../../../main/config/env.js";
 import { migrationsHelper } from "../../helpers/migrations-helper.js";
 
@@ -13,7 +13,7 @@ const makeSut = () => {
 
 let connection: pg.PoolClient;
 
-describe("Account PostgreSQL Repository", () => {
+describe("Add Account Postgres Repository", () => {
   beforeAll(async () => {
     await PostgresHelper.connect({ connectionString: env.databaseUrl });
     connection = await PostgresHelper.getClient();
