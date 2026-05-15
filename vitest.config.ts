@@ -5,6 +5,7 @@ export default defineConfig({
     environment: "node",
     globals: true,
     include: ["./src/**/*.{spec,test}.ts"],
+    exclude: ["dist"],
     setupFiles: ["./setup-tests.js"],
     globalSetup: "./postgres-testcontainer-global-setup.ts",
     fileParallelism: false,
