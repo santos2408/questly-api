@@ -2,7 +2,7 @@ import type { LogErrorRepository } from "../../domain/protocols/decorators/log-e
 import type { Controller } from "../../presentation/protocols/controller.js";
 import type { HttpRequest, HttpResponse } from "../../presentation/protocols/http.js";
 
-export class LogControllerDecorator implements Controller {
+export class LogErrorControllerDecorator implements Controller {
   private readonly controller: Controller;
   private readonly logErrorRepository: LogErrorRepository;
 

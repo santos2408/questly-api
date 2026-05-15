@@ -1,7 +1,7 @@
 import type { Controller } from "../../../presentation/protocols/controller.js";
 import type { LogErrorRepository } from "../../../domain/protocols/decorators/log-error-repository.js";
 import type { HttpRequest, HttpResponse } from "../../../presentation/protocols/http.js";
-import { LogControllerDecorator } from "../log-decorator.js";
+import { LogErrorControllerDecorator } from "../log-error-controller-decorator.js";
 
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
@@ -21,7 +21,7 @@ const makeLogErrorRepositoryStub = () => {
 };
 
 type SutTypes = {
-  sut: LogControllerDecorator;
+  sut: LogErrorControllerDecorator;
   controllerStub: Controller;
   logErrorRepositoryStub: LogErrorRepository;
 };
@@ -29,7 +29,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const controllerStub = makeController();
   const logErrorRepositoryStub = makeLogErrorRepositoryStub();
-  const sut = new LogControllerDecorator(controllerStub, logErrorRepositoryStub);
+  const sut = new LogErrorControllerDecorator(controllerStub, logErrorRepositoryStub);
   return { sut, controllerStub, logErrorRepositoryStub };
 };
 
@@ -43,7 +43,7 @@ const httpRequest: HttpRequest = {
   },
 };
 
-describe("Log Controller Decorator", () => {
+describe("Log Error Controller Decorator", () => {
   it("should call controller.handle", async () => {
     // arrange
     const { sut, controllerStub } = makeSut();
