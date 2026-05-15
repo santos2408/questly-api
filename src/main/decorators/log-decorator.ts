@@ -1,11 +1,14 @@
+import type { LogErrorRepository } from "../../domain/protocols/decorators/log-error-repository.js";
 import type { Controller } from "../../presentation/protocols/controller.js";
 import type { HttpRequest, HttpResponse } from "../../presentation/protocols/http.js";
 
 export class LogControllerDecorator implements Controller {
   private readonly controller: Controller;
+  private readonly logErrorRepository: LogErrorRepository;
 
-  constructor(controller: Controller) {
+  constructor(controller: Controller, logErrorRepository: LogErrorRepository) {
     this.controller = controller;
+    this.logErrorRepository = logErrorRepository;
   }
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -13,7 +16,7 @@ export class LogControllerDecorator implements Controller {
     const serverErrorStatusCode = 500;
 
     if (httpResponse.statusCode === serverErrorStatusCode) {
-      // log error
+      await this.logErrorRepository.log(httpResponse.body.stack);
     }
 
     return httpResponse;

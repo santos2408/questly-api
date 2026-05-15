@@ -5,6 +5,7 @@ import { DbAddAccountUseCase } from "../../application/usecases/add-account/inde
 import { BcryptAdapter } from "../../infra/criptography/bcrypt-adapter.js";
 import { AddAccountPostgresRepository } from "../../infra/database/postgres/repositories/postgres-account-repository.js";
 import { LogControllerDecorator } from "../decorators/log-decorator.js";
+import { LogErrorPostgresRepository } from "../../infra/database/postgres/repositories/postgres-log-error-repository.js";
 
 export const makeSignUpController = (): Controller => {
   const salt = 12;
@@ -13,5 +14,6 @@ export const makeSignUpController = (): Controller => {
   const addAccountPostgresRepository = new AddAccountPostgresRepository();
   const dbAddAccountUseCase = new DbAddAccountUseCase(bcryptAdapter, addAccountPostgresRepository);
   const signupController = new SignUpController(emailValidator, dbAddAccountUseCase);
-  return new LogControllerDecorator(signupController);
+  const logErrorRepository = new LogErrorPostgresRepository();
+  return new LogControllerDecorator(signupController, logErrorRepository);
 };
