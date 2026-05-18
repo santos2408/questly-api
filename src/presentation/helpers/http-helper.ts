@@ -1,6 +1,11 @@
 import type { HttpResponse } from "../protocols/http.js";
 import { ServerError } from "../errors/index.js";
 
+export const ok = (data: any): HttpResponse => ({
+  statusCode: 200,
+  body: data,
+});
+
 // TODO: corrigir retorno de status created, o correto é 201
 export const created = (data: any): HttpResponse => ({
   statusCode: 201,
