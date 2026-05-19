@@ -41,6 +41,32 @@ export const migrationsHelper = {
     }
   },
 
+  async down(client: pg.PoolClient) {
+    let transactionStarted = false;
+
+    try {
+      const queryResult: pg.QueryResult = await client.query("SELECT * FROM migrations");
+      const files = await this.getFiles();
+      const lastInserted = files[files.length - 1];
+
+      if (lastInserted) {
+        const migration = await import(pathToFileURL(lastInserted).href);
+
+        await client.query("BEGIN");
+        transactionStarted = true;
+        await migration.down(client);
+        await client.query("COMMIT");
+        transactionStarted = false;
+      }
+    } catch (error) {
+      if (transactionStarted) {
+        await client.query("ROLLBACK");
+      }
+
+      throw error;
+    }
+  },
+
   async getFiles() {
     const migrationsDir = path.resolve(__dirname, "../migrations");
     const files = await fg("*.{ts,js}", { cwd: migrationsDir, absolute: true, onlyFiles: true });

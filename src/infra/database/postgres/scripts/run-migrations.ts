@@ -10,7 +10,7 @@ try {
   await PostgresHelper.connect(poolConfig);
   client = await PostgresHelper.getClient();
   await migrationsHelper.run(client);
-  console.log("Migrations successfuly created.");
+  console.log("Migrations successfuly migrated");
   process.exitCode = 0;
 } catch (error) {
   console.error(error);
