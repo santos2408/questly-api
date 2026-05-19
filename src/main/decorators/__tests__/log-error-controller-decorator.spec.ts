@@ -47,7 +47,7 @@ const makeController = (): Controller => {
 
 const makeLogErrorRepositoryStub = () => {
   class LogErrorRepositoryStub implements LogErrorRepository {
-    async log(stack: string): Promise<void> {}
+    async logError(stack: string): Promise<void> {}
   }
 
   return new LogErrorRepositoryStub();
@@ -95,7 +95,7 @@ describe("Log Error Controller Decorator", () => {
     error.stack = "any_value";
 
     vi.spyOn(controllerStub, "handle").mockResolvedValueOnce(serverError(error));
-    const logSpy = vi.spyOn(logErrorRepositoryStub, "log");
+    const logSpy = vi.spyOn(logErrorRepositoryStub, "logError");
 
     // act
     await sut.handle(httpRequest);
